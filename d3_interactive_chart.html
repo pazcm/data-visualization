@@ -25,6 +25,10 @@
                 450, 100, 100, 279, 500, 25, 350, 120, 80, 130,
                 110, 102, 375, 200, 175, 168, 180, 230, 205,
             ];
+            
+            var colWidth = w / dataset.length;
+            var barWidht = colWidth - barPadding;
+            
             // Create an SVG element
             var svg = d3.select("#draw-here")
                 .append("svg")
@@ -36,7 +40,7 @@
                     .enter()
                     .append("rect")
                     .attr("x", function(d, i) {
-                        return i * (w / dataset.length);
+                        return i * colWidth;
                     })
                     .attr("y", function(d) {
                         return h - d;
@@ -44,5 +48,5 @@
                     .attr("height", function(d) {
                         return d;
                     })
-                    .attr("width", w / dataset.length - barPadding);
+                    .attr("width", barWidht);
         </script>
