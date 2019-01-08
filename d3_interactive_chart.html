@@ -13,6 +13,8 @@
 
         <h2>D3 Charting</h2>
         
+        <p>Do it more informative, more visual</p>
+        
         <div id="draw-here"></div>
 
         <script>
@@ -27,7 +29,7 @@
             ];
             
             var colWidth = w / dataset.length;
-            var barWidht = colWidth - barPadding;
+            var barWidth = colWidth - barPadding;
             
             // Create an SVG element
             var svg = d3.select("#draw-here")
@@ -48,5 +50,25 @@
                     .attr("height", function(d) {
                         return d;
                     })
-                    .attr("width", barWidht);
+                    .attr("width", barWidth);
+                    
+                    
+                    //use text object
+                    svg.selectAll("text")
+                        .data(dataset)
+                        .enter()
+                        .append("text")
+                        .text(function(d) {
+                            return d;
+                        })
+                        .attr("text-anchor", "middle")
+                        .attr("x", function(d, i) {
+                            return i * colWidth + barWidth / 2;
+                        })
+                        .attr("y", function(d) {
+                            return h - d + 14;
+                        })
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("fill", "white");
         </script>
