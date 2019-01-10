@@ -11,64 +11,55 @@
 <body>
     <h1>Data Visualisation</h1>
 
-        <h2>D3 Charting</h2>
-        
-        <p>Do it more informative, more visual</p>
-        
-        <div id="draw-here"></div>
+    <h2>D3 Charting</h2>
 
-        <script>
-            var w = 500;
-            var h = 500;
-            var barPadding = 1;
-            var numberOfBars = 5;
-                
-            var dataset = [
-                450, 100, 100, 279, 500, 25, 350, 120, 80, 130,
-                110, 102, 375, 200, 175, 168, 180, 230, 205,
-            ];
-            
-            var colWidth = w / dataset.length;
-            var barWidth = colWidth - barPadding;
-            
-            // Create an SVG element
-            var svg = d3.select("#draw-here")
+    <div id="draw-here"></div>
+
+    <script>
+    var w = 500;
+    var h = 500;
+    var barPadding = 1;
+    var dataset = [
+        450, 100, 100, 279, 500, 25, 350, 120, 80, 130,
+        110, 102, 375, 200, 175, 168, 180, 230, 205,
+    ];
+    var colWidth = w / dataset.length;
+    var barWidth = colWidth - barPadding;
+    var svg = d3.select("#draw-here")
                 .append("svg")
                 .attr("height", h)
                 .attr("width", w);
-                
-                svg.selectAll("rect")
-                    .data(dataset)
-                    .enter()
-                    .append("rect")
-                    .attr("x", function(d, i) {
-                        return i * colWidth;
-                    })
-                    .attr("y", function(d) {
-                        return h - d;
-                    })
-                    .attr("height", function(d) {
-                        return d;
-                    })
-                    .attr("width", barWidth);
-                    
-                    
-                    //use text object to add numbers to the bars
-                    svg.selectAll("text")
-                        .data(dataset)
-                        .enter()
-                        .append("text")
-                        .text(function(d) {
-                            return d;
-                        })
-                        .attr("text-anchor", "middle")
-                        .attr("x", function(d, i) {
-                            return i * colWidth + barWidth / 2;
-                        })
-                        .attr("y", function(d) {
-                            return h - d + 14;
-                        })
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "11px")
-                        .attr("fill", "white");
-        </script>
+    svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+            return i * colWidth;
+        })
+        .attr("y", function(d) {
+            return h - d;
+        })
+        .attr("height", function(d) {
+            return d;
+        })
+        .attr("width", barWidth);
+    svg.selectAll("text")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text(function(d) {
+            return d;
+        })
+        .attr("text-anchor", "middle")
+        .attr("x", function(d, i) {
+            return i * colWidth + barWidth / 2;
+        })
+        .attr("y", function(d) {
+            return h - d + 14;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "11px")
+        .attr("fill", "white");
+    </script>
+</body>
+</html>
