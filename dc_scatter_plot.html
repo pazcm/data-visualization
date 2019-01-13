@@ -25,7 +25,7 @@
     <h2>DC Scatter Plot</h2>
 
     <div>
-        <h3>Transactions per date</h3>
+        <h3>Transactions Per Date, colour coded by person</h3>
         <div id="scatter-plot"></div>
     </div>
 
@@ -39,32 +39,36 @@
         transactionsData.forEach(function(d){
             d.date = parseDate(d.date);
         });
-        
-        var date_dim = ndx.dimension(function(d){
+        var dateDim = ndx.dimension(function(d){
             return d.date;
         });
-        
-        var min_date = date_dim.bottom(1)[0].date;
-        var max_date = date_dim.top(1)[0].date;
-        
-        var spend_dim = ndx.dimension(function(d){
-            return [d.date, d.spend];
+        var tradeColors = d3.scale.ordinal()
+            .domain(["Alice", "Tom", "Bob"])
+            .range(["red", "green", "blue"]);
+        var minDate = dateDim.bottom(1)[0].date;
+        var maxDate = dateDim.top(1)[0].date;
+        var spendDim = ndx.dimension(function(d){
+            return [d.date, d.spend, d];
         });
-        
-        var spend_group = spend_dim.group();
+        var spendGroup = spendDim.group();
         var spend_chart = dc.scatterPlot("#scatter-plot");
-        
         spend_chart
             .width(768)
             .height(480)
-            .x(d3.time.scale().domain([min_date, max_date]))
+            .x(d3.time.scale().domain([minDate, maxDate]))
             .brushOn(false)
             .symbolSize(8)
             .clipPadding(10)
             .yAxisLabel("Amount Spent")
-            .dimension(spend_dim)
-            .group(spend_group);
-            
+            .title(function (d) {
+                return d.key[2].name + " spent " + d.key[2].spend + " in store " + d.key[2].store;
+            })
+            .colorAccessor(function (d) {
+                return d.key[2].name;
+            })
+            .colors(tradeColors)
+            .dimension(spendDim)
+            .group(spendGroup);
         dc.renderAll();
     }
     </script>
